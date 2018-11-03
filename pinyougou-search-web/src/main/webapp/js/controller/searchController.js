@@ -1,4 +1,4 @@
-app.controller('searchController', function ($scope, searchService) {
+app.controller('searchController', function ($scope,$location, searchService) {
     //定义搜索对象的结构
     $scope.searchMap = {
         'keywords': '',
@@ -7,7 +7,24 @@ app.controller('searchController', function ($scope, searchService) {
         'price': '',
         'pageNo': 1,
         'pageSize': 10,
+        'sort': '',
+        'sortField': '',
         'spec': {}
+    }
+    //判断关键字是否是品牌
+    $scope.keywordsIsBrand = function () {
+        for (var i = 0; i < $scope.resultMap.brandList.length; i++) {
+            if ($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //排序
+    $scope.sortSearch = function (sortField, sort) {
+        $scope.searchMap.sortField = sortField;
+        $scope.searchMap.sort = sort;
+        $scope.search();
     }
     //搜索
     $scope.search = function () {
@@ -36,7 +53,7 @@ app.controller('searchController', function ($scope, searchService) {
                 firstPage = $scope.searchMap.pageNo - 2;
                 lastPage = $scope.searchMap.pageNo + 2;
             }
-        }else{
+        } else {
             $scope.firstDot = false;//前面无点
             $scope.lastDot = false;//后面无点
         }
@@ -84,6 +101,10 @@ app.controller('searchController', function ($scope, searchService) {
         } else {//用户点击是规格
             delete $scope.searchMap.spec[key];
         }
+        $scope.search();
+    }
+    $scope.loadKeywords = function(){
+        $scope.searchMap.keywords = $location.search()['keywords'];
         $scope.search();
     }
 })

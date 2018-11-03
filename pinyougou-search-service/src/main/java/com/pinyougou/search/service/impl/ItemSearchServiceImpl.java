@@ -7,6 +7,7 @@ import com.pinyougou.search.service.ItemSearchService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -174,6 +175,21 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         query.setOffset((pageNo - 1) * pageSize);//起始索引
         query.setRows(pageSize);//页面大小
 
+        //价格排序
+        String sortValue = (String) searchMap.get("sort");//升序ASC 降序DESC
+        String sortField = (String) searchMap.get("sortField");//排序字段
+        if (sortValue != null && !sortValue.equals("")) {
+            if (sortValue.equals("ASC")) {
+                Sort sort = new Sort(Sort.Direction.ASC, "item_" + sortField);//升序
+                query.addSort(sort);
+            }
+            if (sortValue.equals("DESC")) {
+                Sort sort = new Sort(Sort.Direction.DESC, "item_" + sortField);//升序
+                query.addSort(sort);
+            }
+        }
+
+
         //********** 获取高亮结果集 **********
         //高亮页对象
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);
@@ -203,4 +219,20 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         map.put("total", page.getTotalElements());//总条数
         return map;
     }
+
+    @Override
+    public void importList(List list) {
+        solrTemplate.saveBeans(list);
+        solrTemplate.commit();
+    }
+
+    @Override
+    public void deleteByGoodsIds(List goodsIds) {
+        Query query = new SimpleQuery("*:*");
+        Criteria criteria = new Criteria("item_goodsid").in(goodsIds);
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
+    }
+
 }

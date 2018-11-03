@@ -222,7 +222,7 @@ app.controller('goodsController', function ($scope, $controller, $location, good
                 newList.push(newRow);
             }
         }
-        return newdList;
+        return newList;
     }
     $scope.status = ['未审核', '已审核', '审核未通过', '已关闭']
     $scope.itemCatList = []
