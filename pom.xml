@@ -249,6 +249,12 @@
                 <artifactId>xml-apis</artifactId>
                 <version>1.4.01</version>
             </dependency>
+            <!--activemq-->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>5.13.4</version>
+            </dependency>
             <dependency>
                 <groupId>com.pinyougou</groupId>
                 <artifactId>pinyougou-pojo</artifactId>
@@ -279,6 +285,22 @@
                 <artifactId>pinyougou-search-interface</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.pinyougou</groupId>
+                <artifactId>pinyougou-page-interface</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pinyougou</groupId>
+                <artifactId>pinyougou-usr-interface</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pinyougou</groupId>
+                <artifactId>pinyougou-cart-interface</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
             <!--缓存-->
             <dependency>
                 <groupId>redis.clients</groupId>
@@ -339,5 +361,14 @@
         <module>pinyougou-search-interface</module>
         <module>pinyougou-search-service</module>
         <module>pinyougou-search-web</module>
+        <module>pinyougou-page-interface</module>
+        <module>pinyougou-page-service</module>
+        <module>pinyougou-page-web</module>
+        <module>pinyougou-usr-interface</module>
+        <module>pinyougou-usr-service</module>
+        <module>pinyougou-usr-web</module>
+        <module>pinyougou-cart-interface</module>
+        <module>pinyougou-cart-service</module>
+        <module>pinyougou-cart-web</module>
     </modules>
 </project>

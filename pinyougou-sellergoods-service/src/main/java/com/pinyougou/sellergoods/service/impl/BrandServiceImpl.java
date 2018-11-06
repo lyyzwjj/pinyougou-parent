@@ -17,65 +17,65 @@ import com.pinyougou.sellergoods.service.BrandService;
 import entity.PageResult;
 import util.StringUtil;
 
-@Service
+@Service(timeout = 100000)
 public class BrandServiceImpl implements BrandService {
-	@Autowired
-	private TbBrandMapper brandMapper;
+    @Autowired
+    private TbBrandMapper brandMapper;
 
-	@Override
-	public List<TbBrand> findAll() {
-		return brandMapper.selectByExample(null);
-	}
+    @Override
+    public List<TbBrand> findAll() {
+        return brandMapper.selectByExample(null);
+    }
 
-	@Override
-	public PageResult findPage(int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
-		Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(null);
-		return new PageResult(page.getTotal(), page.getResult());
-	}
+    @Override
+    public PageResult findPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(null);
+        return new PageResult(page.getTotal(), page.getResult());
+    }
 
-	@Override
-	public void add(TbBrand brand) {
-		brandMapper.insert(brand);
-	}
+    @Override
+    public void add(TbBrand brand) {
+        brandMapper.insert(brand);
+    }
 
-	@Override
-	public TbBrand findOne(Long id) {
-		return brandMapper.selectByPrimaryKey(id);
-	}
+    @Override
+    public TbBrand findOne(Long id) {
+        return brandMapper.selectByPrimaryKey(id);
+    }
 
-	@Override
-	public void update(TbBrand brand) {
-		brandMapper.updateByPrimaryKey(brand);
-	}
+    @Override
+    public void update(TbBrand brand) {
+        brandMapper.updateByPrimaryKey(brand);
+    }
 
-	@Override
-	public void delete(Long[] ids) {
-		// for (Long id : ids) {
-		// brandMapper.deleteByPrimaryKey(id);
-		// }
-		brandMapper.batchDelete(ids);
-	}
+    @Override
+    public void delete(Long[] ids) {
+        // for (Long id : ids) {
+        // brandMapper.deleteByPrimaryKey(id);
+        // }
+        brandMapper.batchDelete(ids);
+    }
 
-	@Override
-	public List<Map> selectOptionList() {
-		return brandMapper.selectOptionList();
-	}
+    @Override
+    public List<Map> selectOptionList() {
+        return brandMapper.selectOptionList();
+    }
 
-	@Override
-	public PageResult findPage(TbBrand brand, int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);
-		TbBrandExample example = new TbBrandExample();
-		if (brand != null) {
-			Criteria criteria = example.createCriteria();
-			if (!StringUtil.isEmpty(brand.getName())) {
-				criteria.andNameLike("%" + brand.getName() + "%");
-			}
-			if (!StringUtil.isEmpty(brand.getFirstChar())) {
-				criteria.andFirstCharLike("%" + brand.getFirstChar() + "%");
-			}
-		}
-		Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(example);
-		return new PageResult(page.getTotal(), page.getResult());
-	}
+    @Override
+    public PageResult findPage(TbBrand brand, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        TbBrandExample example = new TbBrandExample();
+        if (brand != null) {
+            Criteria criteria = example.createCriteria();
+            if (!StringUtil.isEmpty(brand.getName())) {
+                criteria.andNameLike("%" + brand.getName() + "%");
+            }
+            if (!StringUtil.isEmpty(brand.getFirstChar())) {
+                criteria.andFirstCharLike("%" + brand.getFirstChar() + "%");
+            }
+        }
+        Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(example);
+        return new PageResult(page.getTotal(), page.getResult());
+    }
 }

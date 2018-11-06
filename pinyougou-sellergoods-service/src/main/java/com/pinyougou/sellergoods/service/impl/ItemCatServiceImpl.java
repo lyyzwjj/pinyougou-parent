@@ -20,7 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  *
  * @author Administrator
  */
-@Service
+@Service(timeout = 1000000)
 public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired

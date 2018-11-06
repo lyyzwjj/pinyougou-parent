@@ -87,7 +87,6 @@
             <groupId>com.pinyougou</groupId>
             <artifactId>pinyougou-common</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
