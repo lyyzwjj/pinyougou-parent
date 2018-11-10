@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +112,8 @@ public class ItemCatServiceImpl implements ItemCatService {
         //将模板ID放入缓存(以商品分类名称)
         List<TbItemCat> itemCatList = findAll();
         for (TbItemCat itemCat : itemCatList) {
-            redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+            //redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+            redisTemplate.opsForHash().put("itemcat",itemCat.getName(), itemCat.getTypeId());
         }
         return itemCatMapper.selectByExample(example);
     }
